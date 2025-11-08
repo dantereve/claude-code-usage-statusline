@@ -1,0 +1,32 @@
+{
+	"oneLine": false,
+	"showSonnetModel": false,
+	"pathDisplayMode": "truncated",
+	"git": {
+		"showBranch": true,
+		"showDirtyIndicator": true,
+		"showChanges": false,
+		"showStaged": true,
+		"showUnstaged": true
+	},
+	"separator": "•",
+	"session": {
+		"infoSeparator": null,
+		"showTokens": true,
+		"showMaxTokens": false,
+		"showTokenDecimals": false,
+		"showPercentage": true
+	},
+	"context": {
+		"maxContextTokens": 200000,
+		"autocompactBufferTokens": 45000,
+		"useUsableContextOnly": false,
+		"overheadTokens": 0
+	},
+	"limits": {
+		"showProgressBar": true,
+		"progressBarLength": 5,
+		"color": "progressive",
+		"showSevenDay": false
+	}
+}

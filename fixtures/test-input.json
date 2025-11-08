@@ -1,0 +1,18 @@
+{
+	"session_id": "06a7b019-03f8-4083-a9db-410d95cb01e6",
+	"transcript_path": "/Users/mathias/.claude/projects/-Users-mathias--claude/06a7b019-03f8-4083-a9db-410d95cb01e6.jsonl",
+	"cwd": "/Users/mathias/.claude",
+	"model": {
+		"id": "claude-sonnet-4-5-20250929",
+		"display_name": "Sonnet 4.5"
+	},
+	"workspace": {
+		"current_dir": "/Users/mathias/.claude",
+		"project_dir": "/Users/mathias/.claude"
+	},
+	"version": "2.0.31",
+	"output_style": {
+		"name": "default"
+	},
+	"exceeds_200k_tokens": false
+}

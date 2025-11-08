@@ -1,0 +1,58 @@
+{
+	"name": "claude-code-usage-statusline",
+	"version": "0.1.0",
+	"description": "Clean statusline for Claude Code showing session info, git status, context usage, and API rate limits",
+	"license": "MIT",
+	"author": "Mathias",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dantereve/claude-code-usage-statusline.git"
+	},
+	"homepage": "https://github.com/dantereve/claude-code-usage-statusline#readme",
+	"bugs": {
+		"url": "https://github.com/dantereve/claude-code-usage-statusline/issues"
+	},
+	"keywords": [
+		"claude",
+		"statusline",
+		"usage",
+		"metrics",
+		"claude-code",
+		"bun"
+	],
+	"bin": {
+		"cc-statusline": "src/index.ts",
+		"cc-statusline-config": "src/config-cli.ts"
+	},
+	"files": [
+		"src",
+		"statusline.config.ts",
+		"statusline.config.example.json",
+		"data"
+	],
+	"module": "src/index.ts",
+	"type": "module",
+	"engines": {
+		"bun": ">=1.0.0"
+	},
+	"os": [
+		"darwin"
+	],
+	"scripts": {
+		"start": "bun run src/index.ts",
+		"config": "bun run src/config-cli.ts",
+		"test": "bun run test.ts",
+		"lint": "biome check --write .",
+		"format": "biome format --write ."
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.2",
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"@clack/prompts": "^0.11.0"
+	}
+}

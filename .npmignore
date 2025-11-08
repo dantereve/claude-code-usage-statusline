@@ -1,0 +1,21 @@
+# Test files
+test.ts
+fixtures/
+
+# Development files
+.git/
+.github/
+.vscode/
+*.log
+
+# Documentation
+CLAUDE.md
+
+# Build artifacts
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+
+# IDE
+.idea/
