@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2025-11-09
+
+### Added
+
+- Blue color mode option for progress bars with custom colors (#b1b9f9 filled, #505370 empty/background)
+- Dynamic background color support for blue mode
+
 ## [0.4.0] - 2025-11-09
 
 ### Changed

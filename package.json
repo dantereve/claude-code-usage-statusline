@@ -1,6 +1,6 @@
 {
 	"name": "claude-code-usage-statusline",
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"description": "Clean statusline for Claude Code showing session info, git status, context usage, and API rate limits",
 	"license": "MIT",
 	"author": "Mathias",
