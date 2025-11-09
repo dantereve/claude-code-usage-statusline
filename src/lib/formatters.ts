@@ -16,9 +16,12 @@ export const colors = {
 	FG_ORANGE: "\x1b[38;5;208m",
 	FG_RED: "\x1b[38;5;196m",
 	FG_GREEN: "\x1b[38;5;28m",
+	FG_BLUE: "\x1b[38;5;147m",
 	FG_EMPTY: "\x1b[38;5;236m",
+	FG_BLUE_EMPTY: "\x1b[38;5;60m",
 	// Background color for progress bar
 	BG_BAR: "\x1b[48;5;236m",
+	BG_BLUE_BAR: "\x1b[48;5;60m",
 	RESET: "\x1b[0m",
 } as const;
 
@@ -148,7 +151,7 @@ export function formatResetTime(resetsAt: string): string {
 export function formatProgressBar(
 	percentage: number,
 	length: number,
-	colorMode: "progressive" | "green" | "yellow" | "red",
+	colorMode: "progressive" | "green" | "yellow" | "red" | "blue",
 ): string {
 	// Partial block characters from empty to nearly full
 	const partialBlocks = ['', '▏', '▎', '▍', '▌', '▋', '▊', '▉'];
@@ -182,12 +185,15 @@ export function formatProgressBar(
 		fgColor = colors.FG_GREEN;
 	} else if (colorMode === "yellow") {
 		fgColor = colors.FG_YELLOW;
+	} else if (colorMode === "blue") {
+		fgColor = colors.FG_BLUE;
 	} else {
 		fgColor = colors.FG_RED;
 	}
 
 	// Build progress bar with background to mask gaps
-	let result = colors.BG_BAR;
+	const bgColor = colorMode === "blue" ? colors.BG_BLUE_BAR : colors.BG_BAR;
+	let result = bgColor;
 
 	// Filled portion (full blocks and partial) with bright foreground color
 	if (fullBlocks > 0 || partialBlock) {
@@ -197,7 +203,8 @@ export function formatProgressBar(
 
 	// Empty portion with dim gray foreground (no RESET between sections)
 	if (emptyBlocks > 0) {
-		result += colors.FG_EMPTY + '░'.repeat(emptyBlocks);
+		const emptyColor = colorMode === "blue" ? colors.FG_BLUE_EMPTY : colors.FG_EMPTY;
+		result += emptyColor + '░'.repeat(emptyBlocks);
 	}
 
 	// Single RESET at the end

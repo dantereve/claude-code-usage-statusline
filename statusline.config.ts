@@ -88,7 +88,8 @@ export interface StatuslineConfig {
 		// - "green": Always green
 		// - "yellow": Always yellow
 		// - "red": Always red
-		color: "progressive" | "green" | "yellow" | "red";
+		// - "blue": Always blue
+		color: "progressive" | "green" | "yellow" | "red" | "blue";
 		// Show seven-day usage limit bar
 		showSevenDay: boolean;
 	};
@@ -124,7 +125,7 @@ export const defaultConfig: StatuslineConfig = {
 	limits: {
 		showProgressBar: true,
 		progressBarLength: 5,
-		color: "progressive",
+		color: "blue",
 		showSevenDay: false,
 	},
 };

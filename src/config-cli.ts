@@ -471,6 +471,7 @@ async function configureLimits(config: StatuslineConfig): Promise<void> {
 						{ value: "green", label: "Always green" },
 						{ value: "yellow", label: "Always yellow" },
 						{ value: "red", label: "Always red" },
+						{ value: "blue", label: "Always blue" },
 					],
 					initialValue: config.limits.color,
 				});
@@ -479,7 +480,8 @@ async function configureLimits(config: StatuslineConfig): Promise<void> {
 						| "progressive"
 						| "green"
 						| "yellow"
-						| "red";
+						| "red"
+						| "blue";
 				}
 				break;
 			}
