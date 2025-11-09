@@ -21,7 +21,6 @@ function deepMerge<T>(target: T, source: Partial<T>): T {
 			typeof targetValue === "object" &&
 			!Array.isArray(targetValue)
 		) {
-			// @ts-expect-error - Deep merge nested objects
 			result[key] = deepMerge(targetValue, sourceValue);
 		} else if (sourceValue !== undefined) {
 			// @ts-expect-error - Assign value

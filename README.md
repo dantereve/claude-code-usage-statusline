@@ -4,9 +4,10 @@ Clean, type-safe statusline for Claude Code displaying real-time session info, g
 
 ## Features
 
-- **Session Info**: Current branch, uncommitted changes, working directory
+- **Session Info**: Current branch, uncommitted changes (color-coded +/-), working directory
 - **Context Usage**: Token consumption and percentage of 200K limit
-- **Usage Limits**: Five-hour API usage with countdown timer, Weekly API usage with reset timer
+- **Usage Limits**: Five-hour & seven-day API usage with visual progress bars (fractional blocks)
+- **Customization**: Icon labels, separators, path modes, progress bar styles
 - **Performance**: <500ms typical render time
 - **Type Safety**: Full TypeScript with strict mode
 
@@ -32,6 +33,12 @@ For more details, see [bun.sh](https://bun.sh)
 
 ```bash
 bun add -g claude-code-usage-statusline
+```
+
+Source your shell file, for instance the .zshrc :
+
+```bash
+source ~/.zshrc
 ```
 
 ## Requirements
@@ -68,38 +75,38 @@ If you don't have Claude Code installed, the statusline will still work but won'
 
 ### Line 1: Session Info
 
-```
-main* (+123 -45) | ~/.claude | Sonnet 4.5
+```text
+main • +123 -45 ~2 • ~/.claude • Sonnet 4.5
 ```
 
 ### Line 2: Metrics
 
-```
-Context: 62.5K tokens 31% | 5h: 15% (3h27m left)
+```text
+Context: 62.5k 31% • 5h: 15% ▊░░░░ (3h27m) • 7d: 45% ████▏░
 ```
 
 **Components:**
 
-- `62.5K tokens` - Context tokens used
+- `62.5k` - Context tokens used (color-coded additions/deletions)
 - `31%` - Context percentage (tokens / 200K)
+- `▊░░░░` - Visual progress bar with fractional blocks
 - `15%` - Five-hour usage
-- `(3h27m left)` - Time until rate limit resets
+- `45%` - Seven-day usage (optional)
+- `(3h27m)` - Time until rate limit resets
 
-## Configuration
+## Customization
 
 ### Interactive Configuration
 
 Launch the interactive config menu:
 
 ```bash
-bun run config
-# or after global install:
 cc-statusline-config
 ```
 
 Navigate through categories:
 
-- **Display Options**: Layout, separators, path display
+- **Display Options**: Layout, separators, path display, use icons instead of labels
 - **Git Settings**: Branch, changes, staged/unstaged files
 - **Session Info**: Token display, decimals, percentages
 - **Context Window**: Max tokens, autocompact buffer
@@ -138,17 +145,26 @@ Settings stored in `statusline.config.json` (auto-created on first use). Example
 - `oneLine`: Display on single line (default: false)
 - `showSonnetModel`: Show model when Sonnet (default: false)
 - `pathDisplayMode`: "full" | "truncated" | "basename" (default: "truncated")
-- `separator`: Section separator character (default: "•")
+- `useIconLabels`: Use icons (📚🕔📅) instead of text labels (default: false)
+- `separator`: Section separator ("|", "•", "·", etc.) (default: "•")
 - `git.showBranch`: Show branch name (default: true)
-- `git.showDirtyIndicator`: Show * when dirty (default: true)
-- `git.showChanges`: Show +/- line counts (default: false)
+- `git.showDirtyIndicator`: Show • when dirty (default: true)
+- `git.showChanges`: Show color-coded +/- line counts (default: false)
 - `git.showStaged`: Show staged files (default: true)
 - `git.showUnstaged`: Show unstaged files (default: true)
+- `session.infoSeparator`: Info separator or null for space (default: null)
 - `session.showTokens`: Show token count (default: true)
+- `session.showMaxTokens`: Show max tokens (192k/200k) (default: false)
+- `session.showTokenDecimals`: Show decimals in tokens (default: false)
 - `session.showPercentage`: Show context % (default: true)
 - `context.maxContextTokens`: Context window size (default: 200000)
-- `limits.showProgressBar`: Visual progress bar (default: true)
+- `context.autocompactBufferTokens`: Autocompact buffer (default: 45000)
+- `context.useUsableContextOnly`: Include buffer in display (default: false)
+- `context.overheadTokens`: System overhead tokens (default: 0)
+- `limits.showProgressBar`: Visual progress bar with fractional blocks (default: true)
+- `limits.progressBarLength`: Bar length: 5, 10, or 15 chars (default: 5)
 - `limits.color`: "progressive" | "green" | "yellow" | "red" (default: "progressive")
+- `limits.showSevenDay`: Show seven-day usage bar (default: false)
 
 ## Development
 
@@ -169,19 +185,19 @@ echo '{"type": "test"}' | bun run src/index.ts
 
 ## Architecture
 
-```
+```text
 src/
 ├── index.ts              # Main entry point
 ├── config-cli.ts         # Interactive config CLI
 └── lib/
     ├── types.ts          # TypeScript interfaces
-    ├── git.ts            # Git operations
+    ├── git.ts            # Git operations (color-coded changes)
     ├── context.ts        # Transcript parsing
     ├── usage-limits.ts   # Claude OAuth API
     ├── config.ts         # Config load/save utilities
-    └── formatters.ts     # Display utilities
+    └── formatters.ts     # Display utilities (progress bars)
 
-statusline.config.ts          # TypeScript types
+statusline.config.ts          # Config types & defaults
 statusline.config.json        # User config (auto-created)
 statusline.config.example.json # Example config
 ```
