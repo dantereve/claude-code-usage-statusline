@@ -1,6 +1,6 @@
 {
 	"name": "claude-code-usage-statusline",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"description": "Clean statusline for Claude Code showing session info, git status, context usage, and API rate limits",
 	"license": "MIT",
 	"author": "Mathias",
@@ -41,7 +41,8 @@
 	"scripts": {
 		"start": "bun run src/index.ts",
 		"config": "bun run src/config-cli.ts",
-		"test": "bun run test.ts",
+		"test": "bun test",
+		"test:integration": "bun run test.ts",
 		"lint": "biome check --write .",
 		"format": "biome format --write ."
 	},

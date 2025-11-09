@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2025-11-09
+
+### Fixed
+- Progress bar visual artifacts: eliminated dark transition bars between filled and empty sections
+- Terminal background showing through during foreground color transitions
+- Visual inconsistency between background and empty section colors
+
+### Changed
+- Refactored progress bar rendering to use background color overlay approach for smoother appearance
+
 ## [0.3.0] - 2025-11-09
 
 ### Added

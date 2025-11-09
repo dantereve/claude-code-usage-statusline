@@ -10,6 +10,15 @@ export const colors = {
 	GRAY: "\x1b[0;90m",
 	DIM: "\x1b[2;90m",
 	LIGHT_GRAY: "\x1b[0;37m",
+	// Foreground colors for progress bars
+	FG_GRAY: "\x1b[38;5;240m",
+	FG_YELLOW: "\x1b[38;5;220m",
+	FG_ORANGE: "\x1b[38;5;208m",
+	FG_RED: "\x1b[38;5;196m",
+	FG_GREEN: "\x1b[38;5;28m",
+	FG_EMPTY: "\x1b[38;5;236m",
+	// Background color for progress bar
+	BG_BAR: "\x1b[48;5;236m",
 	RESET: "\x1b[0m",
 } as const;
 
@@ -157,45 +166,44 @@ export function formatProgressBar(
 	const usedBlocks = fullBlocks + (partialBlock ? 1 : 0);
 	const emptyBlocks = Math.max(0, length - usedBlocks);
 
-	// Determine color
-	let barColor: string;
+	// Determine foreground color
+	let fgColor: string;
 	if (colorMode === "progressive") {
 		if (percentage < 50) {
-			barColor = colors.GRAY;
+			fgColor = colors.FG_GRAY;
 		} else if (percentage < 70) {
-			barColor = colors.YELLOW;
+			fgColor = colors.FG_YELLOW;
 		} else if (percentage < 90) {
-			barColor = colors.ORANGE;
+			fgColor = colors.FG_ORANGE;
 		} else {
-			barColor = colors.RED;
+			fgColor = colors.FG_RED;
 		}
 	} else if (colorMode === "green") {
-		barColor = colors.GREEN;
+		fgColor = colors.FG_GREEN;
 	} else if (colorMode === "yellow") {
-		barColor = colors.YELLOW;
+		fgColor = colors.FG_YELLOW;
 	} else {
-		barColor = colors.RED;
+		fgColor = colors.FG_RED;
 	}
 
-	// Build bar character-by-character to avoid mid-string color transitions
-	const chars: string[] = [];
+	// Build progress bar with background to mask gaps
+	let result = colors.BG_BAR;
 
-	// Add filled blocks
-	for (let i = 0; i < fullBlocks; i++) {
-		chars.push(`${barColor}█${colors.RESET}`);
+	// Filled portion (full blocks and partial) with bright foreground color
+	if (fullBlocks > 0 || partialBlock) {
+		result += fgColor + '█'.repeat(fullBlocks);
+		if (partialBlock) result += partialBlock;
 	}
 
-	// Add partial block if exists
-	if (partialBlock) {
-		chars.push(`${barColor}${partialBlock}${colors.RESET}`);
+	// Empty portion with dim gray foreground (no RESET between sections)
+	if (emptyBlocks > 0) {
+		result += colors.FG_EMPTY + '░'.repeat(emptyBlocks);
 	}
 
-	// Add empty blocks
-	for (let i = 0; i < emptyBlocks; i++) {
-		chars.push(`${colors.GRAY}░${colors.RESET}`);
-	}
+	// Single RESET at the end
+	result += colors.RESET;
 
-	return chars.join('');
+	return result;
 }
 
 export interface SessionConfig {

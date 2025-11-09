@@ -67,9 +67,9 @@ function buildSecondLine(
 				limitsConfig.progressBarLength,
 				limitsConfig.color,
 			);
-			line += ` ${sep} ${label} ${bar} ${colors.LIGHT_GRAY}${fiveHourUtilization}${colors.GRAY}%${colors.RESET} ${colors.DIM}(${resetTime})${colors.RESET}`;
+			line += ` ${sep} ${label} ${bar} ${colors.LIGHT_GRAY}${fiveHourUtilization}${colors.GRAY}%${colors.RESET} ${colors.DIM}(${resetTime} left)${colors.RESET}`;
 		} else {
-			line += ` ${sep} ${label} ${colors.LIGHT_GRAY}${fiveHourUtilization}${colors.GRAY}%${colors.RESET} ${colors.DIM}(${resetTime})${colors.RESET}`;
+			line += ` ${sep} ${label} ${colors.LIGHT_GRAY}${fiveHourUtilization}${colors.GRAY}%${colors.RESET} ${colors.DIM}(${resetTime} left)${colors.RESET}`;
 		}
 	}
 
@@ -90,9 +90,9 @@ function buildSecondLine(
 				limitsConfig.progressBarLength,
 				limitsConfig.color,
 			);
-			line += ` ${sep} ${label} ${bar} ${colors.LIGHT_GRAY}${sevenDayUtilization}${colors.GRAY}%${colors.RESET} ${colors.DIM}(${resetTime})${colors.RESET}`;
+			line += ` ${sep} ${label} ${bar} ${colors.LIGHT_GRAY}${sevenDayUtilization}${colors.GRAY}%${colors.RESET} ${colors.DIM}(${resetTime} left)${colors.RESET}`;
 		} else {
-			line += ` ${sep} ${label} ${colors.LIGHT_GRAY}${sevenDayUtilization}${colors.GRAY}%${colors.RESET} ${colors.DIM}(${resetTime})${colors.RESET}`;
+			line += ` ${sep} ${label} ${colors.LIGHT_GRAY}${sevenDayUtilization}${colors.GRAY}%${colors.RESET} ${colors.DIM}(${resetTime} left)${colors.RESET}`;
 		}
 	}
 
