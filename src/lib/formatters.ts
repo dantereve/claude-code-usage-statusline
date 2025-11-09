@@ -141,12 +141,27 @@ export function formatProgressBar(
 	length: number,
 	colorMode: "progressive" | "green" | "yellow" | "red",
 ): string {
-	const filled = Math.round((percentage / 100) * length);
-	const empty = length - filled;
+	// Partial block characters from empty to nearly full
+	const partialBlocks = ['', '▏', '▎', '▍', '▌', '▋', '▊', '▉'];
 
-	const filledBar = "█".repeat(filled);
-	const emptyBar = "░".repeat(empty);
+	// Calculate progress
+	const progress = (percentage / 100) * length;
+	const fullBlocks = Math.floor(progress);
+	const remainder = progress % 1;
 
+	// Get partial block character
+	const partialBlockIndex = Math.floor(remainder * 8);
+	const partialBlock = partialBlocks[partialBlockIndex];
+
+	// Calculate empty blocks
+	const usedBlocks = fullBlocks + (partialBlock ? 1 : 0);
+	const emptyBlocks = Math.max(0, length - usedBlocks);
+
+	// Build bar components
+	const filledBar = "█".repeat(fullBlocks);
+	const emptyBar = "░".repeat(emptyBlocks);
+
+	// Determine color
 	let barColor: string;
 	if (colorMode === "progressive") {
 		if (percentage < 50) {
@@ -166,7 +181,7 @@ export function formatProgressBar(
 		barColor = colors.RED;
 	}
 
-	return `${barColor}${filledBar}${colors.GRAY}${emptyBar}${colors.RESET}`;
+	return `${barColor}${filledBar}${partialBlock}${colors.GRAY}${emptyBar}${colors.RESET}`;
 }
 
 export interface SessionConfig {

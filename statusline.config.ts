@@ -79,7 +79,7 @@ export interface StatuslineConfig {
 		// Show progress bar instead of just percentage
 		showProgressBar: boolean;
 		// Progress bar length (number of characters)
-		progressBarLength: 5 | 10;
+		progressBarLength: 5 | 10 | 15;
 		// Progress bar color mode:
 		// - "progressive": Changes color based on usage (gray < 50%, yellow < 70%, orange < 90%, red >= 90%)
 		// - "green": Always green

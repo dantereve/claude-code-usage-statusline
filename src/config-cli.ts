@@ -444,11 +444,12 @@ async function configureLimits(config: StatuslineConfig): Promise<void> {
 					options: [
 						{ value: 5, label: "5 characters" },
 						{ value: 10, label: "10 characters" },
+						{ value: 15, label: "15 characters" },
 					],
 					initialValue: config.limits.progressBarLength,
 				});
 				if (!clack.isCancel(length)) {
-					config.limits.progressBarLength = length as 5 | 10;
+					config.limits.progressBarLength = length as 5 | 10 | 15;
 				}
 				break;
 			}
