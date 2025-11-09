@@ -23,6 +23,9 @@ export interface StatuslineConfig {
 	// - "basename": Show only the directory name
 	pathDisplayMode: "full" | "truncated" | "basename";
 
+	// Use Unicode icons instead of text labels (📚 instead of "Context:", 🕔 instead of "5h:", 📅 instead of "7d:")
+	useIconLabels: boolean;
+
 	// Git display configuration
 	git: {
 		// Show current branch name
@@ -55,8 +58,6 @@ export interface StatuslineConfig {
 		showTokenDecimals: boolean;
 		// Show context percentage
 		showPercentage: boolean;
-		// Use Unicode icons instead of text labels (◆ instead of "Context:", ⚡ instead of "5h:", 📅 instead of "7d:")
-		useIconLabels?: boolean;
 	};
 
 	// Context display configuration
@@ -94,6 +95,7 @@ export const defaultConfig: StatuslineConfig = {
 	oneLine: false,
 	showSonnetModel: false,
 	pathDisplayMode: "truncated",
+	useIconLabels: false,
 	git: {
 		showBranch: true,
 		showDirtyIndicator: true,
@@ -108,7 +110,6 @@ export const defaultConfig: StatuslineConfig = {
 		showMaxTokens: false,
 		showTokenDecimals: false,
 		showPercentage: true,
-		useIconLabels: false,
 	},
 	context: {
 		maxContextTokens: 200000,

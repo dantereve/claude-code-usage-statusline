@@ -175,7 +175,6 @@ export interface SessionConfig {
 	showMaxTokens: boolean;
 	showTokenDecimals: boolean;
 	showPercentage: boolean;
-	useIconLabels?: boolean;
 }
 
 export function formatSession(
@@ -183,6 +182,7 @@ export function formatSession(
 	tokensMax: number,
 	percentage: number,
 	config: SessionConfig,
+	useIconLabels: boolean,
 ): string {
 	const sessionItems: string[] = [];
 
@@ -205,7 +205,7 @@ export function formatSession(
 		return "";
 	}
 
-	const label = config.useIconLabels
+	const label = useIconLabels
 		? `${colors.DIM}${symbols.CONTEXT}${colors.RESET}`
 		: `${colors.DIM}Context:${colors.RESET}`;
 

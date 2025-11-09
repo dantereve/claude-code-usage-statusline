@@ -93,7 +93,7 @@ async function configureDisplay(config: StatuslineConfig): Promise<void> {
 
 		const check = (val: boolean) => (val ? "✓" : "✗");
 		clack.log.info(
-			`\n  One line: ${check(config.oneLine)}\n  Show Sonnet model: ${check(config.showSonnetModel)}\n  Path mode: ${config.pathDisplayMode}\n  Separator: ${config.separator}\n`,
+			`\n  One line: ${check(config.oneLine)}\n  Show Sonnet model: ${check(config.showSonnetModel)}\n  Path mode: ${config.pathDisplayMode}\n  Use icon labels: ${check(config.useIconLabels)}\n  Separator: ${config.separator}\n`,
 		);
 
 		const choice = await clack.select({
@@ -110,6 +110,10 @@ async function configureDisplay(config: StatuslineConfig): Promise<void> {
 				{
 					value: "pathMode",
 					label: `Change path mode (${config.pathDisplayMode})`,
+				},
+				{
+					value: "useIconLabels",
+					label: `${check(config.useIconLabels)} Toggle icon labels (📚 🕔 📅)`,
 				},
 				{
 					value: "separator",
@@ -145,6 +149,9 @@ async function configureDisplay(config: StatuslineConfig): Promise<void> {
 				}
 				break;
 			}
+			case "useIconLabels":
+				config.useIconLabels = !config.useIconLabels;
+				break;
 			case "separator": {
 				const sep = await clack.select({
 					message: "Select separator character:",
@@ -227,7 +234,7 @@ async function configureSession(config: StatuslineConfig): Promise<void> {
 		const check = (val: boolean) => (val ? "✓" : "✗");
 		const infoSep = config.session.infoSeparator || "(space)";
 		clack.log.info(
-			`\n  Show tokens: ${check(config.session.showTokens)}\n  Show max tokens: ${check(config.session.showMaxTokens)}\n  Show decimals: ${check(config.session.showTokenDecimals)}\n  Show percentage: ${check(config.session.showPercentage)}\n  Use icon labels: ${check(config.session.useIconLabels ?? false)}\n  Info separator: ${infoSep}\n`,
+			`\n  Show tokens: ${check(config.session.showTokens)}\n  Show max tokens: ${check(config.session.showMaxTokens)}\n  Show decimals: ${check(config.session.showTokenDecimals)}\n  Show percentage: ${check(config.session.showPercentage)}\n  Info separator: ${infoSep}\n`,
 		);
 
 		const choice = await clack.select({
@@ -248,10 +255,6 @@ async function configureSession(config: StatuslineConfig): Promise<void> {
 				{
 					value: "showPercentage",
 					label: `${check(config.session.showPercentage)} Toggle show percentage`,
-				},
-				{
-					value: "useIconLabels",
-					label: `${check(config.session.useIconLabels ?? false)} Toggle icon labels (◆ ⚡ 📅)`,
 				},
 				{
 					value: "infoSeparator",
@@ -277,9 +280,6 @@ async function configureSession(config: StatuslineConfig): Promise<void> {
 				break;
 			case "showPercentage":
 				config.session.showPercentage = !config.session.showPercentage;
-				break;
-			case "useIconLabels":
-				config.session.useIconLabels = !(config.session.useIconLabels ?? false);
 				break;
 			case "infoSeparator": {
 				const useSeparator = await clack.confirm({
@@ -577,6 +577,7 @@ async function cmdList(): Promise<void> {
 	console.log(`  oneLine: ${config.oneLine}`);
 	console.log(`  showSonnetModel: ${config.showSonnetModel}`);
 	console.log(`  pathDisplayMode: ${config.pathDisplayMode}`);
+	console.log(`  useIconLabels: ${config.useIconLabels}`);
 	console.log(`  separator: ${config.separator}`);
 
 	console.log("\nGit:");
@@ -592,7 +593,6 @@ async function cmdList(): Promise<void> {
 	console.log(`  showMaxTokens: ${config.session.showMaxTokens}`);
 	console.log(`  showTokenDecimals: ${config.session.showTokenDecimals}`);
 	console.log(`  showPercentage: ${config.session.showPercentage}`);
-	console.log(`  useIconLabels: ${config.session.useIconLabels ?? false}`);
 
 	console.log("\nContext:");
 	console.log(`  maxContextTokens: ${config.context.maxContextTokens}`);

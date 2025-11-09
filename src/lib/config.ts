@@ -74,6 +74,20 @@ export async function loadConfig(): Promise<StatuslineConfig> {
 		const file = Bun.file(CONFIG_PATH);
 		const userConfig = (await file.json()) as Partial<StatuslineConfig>;
 
+		// Auto-migrate: Move session.useIconLabels to top-level useIconLabels
+		// biome-ignore lint/suspicious/noExplicitAny: Migration requires dynamic access
+		if ((userConfig.session as any)?.useIconLabels !== undefined) {
+			// biome-ignore lint/suspicious/noExplicitAny: Migration requires dynamic access
+			userConfig.useIconLabels = (userConfig.session as any).useIconLabels;
+			// biome-ignore lint/suspicious/noExplicitAny: Migration requires dynamic deletion
+			delete (userConfig.session as any).useIconLabels;
+
+			// Save migrated config
+			const migratedConfig = deepMerge(defaultConfig, userConfig);
+			await saveConfig(migratedConfig);
+			return migratedConfig;
+		}
+
 		// Merge user config with defaults
 		return deepMerge(defaultConfig, userConfig);
 	} catch (error) {

@@ -43,15 +43,15 @@ function buildSecondLine(
 	sevenDayReset: string | null,
 	sessionConfig: StatuslineConfig["session"],
 	limitsConfig: StatuslineConfig["limits"],
+	useIconLabels: boolean,
 	separator: string,
 ): string {
-	const useIconLabels = sessionConfig.useIconLabels ?? false;
-
 	let line = formatSession(
 		tokensUsed,
 		tokensMax,
 		contextPercentage,
 		sessionConfig,
+		useIconLabels,
 	);
 
 	if (fiveHourUtilization !== null && fiveHourReset) {
@@ -150,6 +150,7 @@ async function main() {
 			usageLimits.seven_day?.resets_at ?? null,
 			config.session,
 			config.limits,
+			config.useIconLabels,
 			config.separator,
 		);
 
