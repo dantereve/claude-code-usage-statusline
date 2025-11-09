@@ -14,6 +14,9 @@ export interface StatuslineConfig {
 	// Display everything on one line (separated by separator) or two lines
 	oneLine: boolean;
 
+	// Show the first line (session info: branch, path, model)
+	showFirstLine: boolean;
+
 	// Show model name even when using Sonnet (default model)
 	showSonnetModel: boolean;
 
@@ -93,6 +96,7 @@ export interface StatuslineConfig {
 
 export const defaultConfig: StatuslineConfig = {
 	oneLine: false,
+	showFirstLine: true,
 	showSonnetModel: false,
 	pathDisplayMode: "truncated",
 	useIconLabels: false,

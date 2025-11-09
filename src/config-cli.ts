@@ -93,7 +93,7 @@ async function configureDisplay(config: StatuslineConfig): Promise<void> {
 
 		const check = (val: boolean) => (val ? "✓" : "✗");
 		clack.log.info(
-			`\n  One line: ${check(config.oneLine)}\n  Show Sonnet model: ${check(config.showSonnetModel)}\n  Path mode: ${config.pathDisplayMode}\n  Use icon labels: ${check(config.useIconLabels)}\n  Separator: ${config.separator}\n`,
+			`\n  One line: ${check(config.oneLine)}\n  Show first line: ${check(config.showFirstLine)}\n  Show Sonnet model: ${check(config.showSonnetModel)}\n  Path mode: ${config.pathDisplayMode}\n  Use icon labels: ${check(config.useIconLabels)}\n  Separator: ${config.separator}\n`,
 		);
 
 		const choice = await clack.select({
@@ -102,6 +102,10 @@ async function configureDisplay(config: StatuslineConfig): Promise<void> {
 				{
 					value: "oneLine",
 					label: `${check(config.oneLine)} Toggle one line`,
+				},
+				{
+					value: "showFirstLine",
+					label: `${check(config.showFirstLine)} Toggle first line (session info)`,
 				},
 				{
 					value: "showSonnet",
@@ -130,6 +134,9 @@ async function configureDisplay(config: StatuslineConfig): Promise<void> {
 		switch (choice) {
 			case "oneLine":
 				config.oneLine = !config.oneLine;
+				break;
+			case "showFirstLine":
+				config.showFirstLine = !config.showFirstLine;
 				break;
 			case "showSonnet":
 				config.showSonnetModel = !config.showSonnetModel;
@@ -576,6 +583,7 @@ async function cmdList(): Promise<void> {
 
 	console.log("Display:");
 	console.log(`  oneLine: ${config.oneLine}`);
+	console.log(`  showFirstLine: ${config.showFirstLine}`);
 	console.log(`  showSonnetModel: ${config.showSonnetModel}`);
 	console.log(`  pathDisplayMode: ${config.pathDisplayMode}`);
 	console.log(`  useIconLabels: ${config.useIconLabels}`);

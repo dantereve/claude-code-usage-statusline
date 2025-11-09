@@ -154,11 +154,17 @@ async function main() {
 			config.separator,
 		);
 
-		if (config.oneLine) {
+		if (!config.showFirstLine) {
+			// Only show second line (metrics)
+			console.log(secondLine);
+			console.log(""); // Empty second line for spacing
+		} else if (config.oneLine) {
+			// Show both lines merged
 			const sep = ` ${colors.GRAY}${config.separator}${colors.LIGHT_GRAY} `;
 			console.log(`${firstLine}${sep}${secondLine}`);
 			console.log(""); // Empty second line for spacing
 		} else {
+			// Show both lines separately
 			console.log(firstLine);
 			console.log(secondLine);
 		}
