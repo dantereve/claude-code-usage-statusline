@@ -138,7 +138,7 @@ cc-statusline-config import ./my-config.json
 
 ### Configuration File
 
-Settings stored in `statusline.config.json` (auto-created on first use). Example configuration in `statusline.config.example.json`.
+Settings stored in `~/.config/claude-code-statusline/statusline.config.json` (auto-created on first use). Configuration persists across package upgrades (`bun add -g`). Example configuration in `statusline.config.example.json`.
 
 **Available Settings:**
 
@@ -197,9 +197,9 @@ src/
     ├── config.ts         # Config load/save utilities
     └── formatters.ts     # Display utilities (progress bars)
 
-statusline.config.ts          # Config types & defaults
-statusline.config.json        # User config (auto-created)
-statusline.config.example.json # Example config
+statusline.config.ts                                      # Config types & defaults
+~/.config/claude-code-statusline/statusline.config.json  # User config (XDG location)
+statusline.config.example.json                           # Example config
 ```
 
 ## Error Handling

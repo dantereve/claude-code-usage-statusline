@@ -1,9 +1,12 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, mkdirSync } from "node:fs";
+import { dirname, join } from "node:path";
 import type { StatuslineConfig } from "../../statusline.config";
 import { defaultConfig } from "../../statusline.config";
 
-const CONFIG_PATH = join(import.meta.dir, "../../statusline.config.json");
+const CONFIG_PATH = join(
+	process.env.XDG_CONFIG_HOME || join(process.env.HOME || "~", ".config"),
+	"claude-code-statusline/statusline.config.json",
+);
 
 /**
  * Deep merge two objects, with source overwriting target
@@ -100,6 +103,10 @@ export async function loadConfig(): Promise<StatuslineConfig> {
  */
 export async function saveConfig(config: StatuslineConfig): Promise<void> {
 	try {
+		const configDir = dirname(CONFIG_PATH);
+		if (!existsSync(configDir)) {
+			mkdirSync(configDir, { recursive: true });
+		}
 		await Bun.write(CONFIG_PATH, JSON.stringify(config, null, 2));
 	} catch (error) {
 		throw new Error(`Failed to save config: ${error}`);

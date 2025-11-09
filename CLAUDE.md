@@ -56,7 +56,7 @@ src/
     └── formatters.ts     # Display utilities (colors, progress bars with fractional blocks)
 
 statusline.config.ts          # Config types & defaults
-statusline.config.json        # User config (auto-created)
+~/.config/claude-code-statusline/statusline.config.json  # User config (XDG location)
 ```
 
 ### Data Flow
@@ -178,6 +178,8 @@ This ensures statusline never crashes Claude Code.
 
 ### Config Loading (`lib/config.ts`)
 
+- **Location**: Stored in `~/.config/claude-code-statusline/` (XDG standard)
+- **Persistence**: Configs survive package upgrades (`bun add -g`)
 - **Auto-merge**: User config merged with defaults (deep merge)
 - **Migration**: Auto-migrates `session.useIconLabels` → `useIconLabels`
 - **Validation**: Type-safe validation of config structure
