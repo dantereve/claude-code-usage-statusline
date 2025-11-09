@@ -157,10 +157,6 @@ export function formatProgressBar(
 	const usedBlocks = fullBlocks + (partialBlock ? 1 : 0);
 	const emptyBlocks = Math.max(0, length - usedBlocks);
 
-	// Build bar components
-	const filledBar = "█".repeat(fullBlocks);
-	const emptyBar = "░".repeat(emptyBlocks);
-
 	// Determine color
 	let barColor: string;
 	if (colorMode === "progressive") {
@@ -181,7 +177,25 @@ export function formatProgressBar(
 		barColor = colors.RED;
 	}
 
-	return `${barColor}${filledBar}${partialBlock}${colors.GRAY}${emptyBar}${colors.RESET}`;
+	// Build bar character-by-character to avoid mid-string color transitions
+	const chars: string[] = [];
+
+	// Add filled blocks
+	for (let i = 0; i < fullBlocks; i++) {
+		chars.push(`${barColor}█${colors.RESET}`);
+	}
+
+	// Add partial block if exists
+	if (partialBlock) {
+		chars.push(`${barColor}${partialBlock}${colors.RESET}`);
+	}
+
+	// Add empty blocks
+	for (let i = 0; i < emptyBlocks; i++) {
+		chars.push(`${colors.GRAY}░${colors.RESET}`);
+	}
+
+	return chars.join('');
 }
 
 export interface SessionConfig {
