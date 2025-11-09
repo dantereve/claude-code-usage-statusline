@@ -45,7 +45,7 @@ export function formatBranch(
 
 			if (total > 0) {
 				changes.push(
-					`${colors.LIGHT_GRAY}${symbols.CHANGES}${total}${colors.RESET}`,
+					`${colors.GREEN}+${totalAdded}${colors.RESET} ${colors.RED}-${totalDeleted}${colors.RESET}`,
 				);
 			}
 		}
