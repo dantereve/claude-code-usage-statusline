@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-03-13
+
+### Added
+
+- Auto-detect 1M context window from model name (e.g., `claude-opus-4-6[1m]`)
+- Context presets for 200k and 1M windows with correct autocompact buffer values
+
 ## [0.5.0] - 2025-11-09
 
 ### Added

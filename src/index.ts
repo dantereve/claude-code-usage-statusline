@@ -1,6 +1,7 @@
 #!/usr/bin/env bun
 
 import type { StatuslineConfig } from "../statusline.config";
+import { contextPresets } from "../statusline.config";
 import { loadConfig } from "./lib/config";
 import { getContextData } from "./lib/context";
 import {
@@ -117,6 +118,17 @@ async function main() {
 		const config = await loadConfig();
 		const input: HookInput = await Bun.stdin.json();
 
+		// Auto-detect 1M context from model name (e.g., "claude-opus-4-6[1m]")
+		const is1mContext =
+			/\b1m\b/i.test(input.model.id) ||
+			/\b1m\b/i.test(input.model.display_name);
+		const maxContextTokens = is1mContext
+			? contextPresets["1m"].maxContextTokens
+			: config.context.maxContextTokens;
+		const autocompactBufferTokens = is1mContext
+			? contextPresets["1m"].autocompactBufferTokens
+			: config.context.autocompactBufferTokens;
+
 		const git = await getGitStatus();
 		const branch = formatBranch(git, config.git);
 		const dirPath = formatPath(
@@ -126,8 +138,8 @@ async function main() {
 
 		const contextData = await getContextData({
 			transcriptPath: input.transcript_path,
-			maxContextTokens: config.context.maxContextTokens,
-			autocompactBufferTokens: config.context.autocompactBufferTokens,
+			maxContextTokens,
+			autocompactBufferTokens,
 			useUsableContextOnly: config.context.useUsableContextOnly,
 			overheadTokens: config.context.overheadTokens,
 		});
@@ -142,7 +154,7 @@ async function main() {
 		);
 		const secondLine = buildSecondLine(
 			contextData.tokens,
-			config.context.maxContextTokens,
+			maxContextTokens,
 			contextData.percentage,
 			usageLimits.five_hour?.utilization ?? null,
 			usageLimits.five_hour?.resets_at ?? null,

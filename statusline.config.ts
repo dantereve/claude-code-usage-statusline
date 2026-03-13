@@ -95,6 +95,11 @@ export interface StatuslineConfig {
 	};
 }
 
+export const contextPresets = {
+	"200k": { maxContextTokens: 200_000, autocompactBufferTokens: 45_000 },
+	"1m": { maxContextTokens: 1_000_000, autocompactBufferTokens: 33_000 },
+} as const;
+
 export const defaultConfig: StatuslineConfig = {
 	oneLine: false,
 	showFirstLine: true,
